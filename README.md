@@ -3,8 +3,8 @@
 
 | Student Information |                |
 |:-------------------:|----------------|
-|  Student Name       |   Name Here    |
-|  Student Email      |   Email Here   |
+|  Student Name       |   Megan Lew    |
+|  Student Email      |   mlew1@mail.sfsu.edu   |
 
 ## src Folder Purpose 
 src folder is to be used to store source code only.
