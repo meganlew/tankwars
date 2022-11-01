@@ -8,6 +8,7 @@ package tankrotationexample.game;
 
 import tankrotationexample.GameConstants;
 import tankrotationexample.Launcher;
+import tankrotationexample.Resources;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,6 +27,7 @@ public class GameWorld extends JPanel implements Runnable {
     private BufferedImage world;
 
     private Tank t1;
+    private Tank t2;
     private Launcher lf;
     private long tick = 0;
 
@@ -44,6 +46,7 @@ public class GameWorld extends JPanel implements Runnable {
             while (true) {
                 this.tick++;
                 this.t1.update(); // update tank
+                this.t2.update();
                 // check for collisions
                 this.repaint();   // redraw game
                 
@@ -87,24 +90,17 @@ public class GameWorld extends JPanel implements Runnable {
                 GameConstants.GAME_SCREEN_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
 
-        BufferedImage t1img = null;
-        try {
-            /*
-             * note class loaders read files from the out folder (build folder in Netbeans) and not the
-             * current working directory. When running a jar, class loaders will read from withing the jar.
-             */
-            t1img = ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource("tank1.png"),
-                    "Could not find tank1.png")
-            );
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
 
-        t1 = new Tank(300, 300, 0, 0, (short) 0, t1img);
+        // intialize tank with position
+        t1 = new Tank(300, 300, 0, 0, (short) 0, Resources.getSprites("tank1"));
+        // creating control object of tank
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SPACE);
+        // add to the keylistener of the JFrame
         this.lf.getJf().addKeyListener(tc1);
+
+        t2 = new Tank(800, 500, 0, 0, (short) 0, Resources.getSprites("tank2"));
+        TankControl tc2 = new TankControl(t2, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_ENTER);
+        this.lf.getJf().addKeyListener(tc2);
     }
 
 
@@ -115,6 +111,7 @@ public class GameWorld extends JPanel implements Runnable {
         buffer.setColor(Color.black);
         buffer.fillRect(0,0,GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
         this.t1.drawImage(buffer);
+        this.t2.drawImage(buffer);
         // draw walls
         // draw bullets
         g2.drawImage(world, 0, 0, null);

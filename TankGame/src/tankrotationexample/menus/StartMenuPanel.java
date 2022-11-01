@@ -2,6 +2,7 @@ package tankrotationexample.menus;
 
 
 import tankrotationexample.Launcher;
+import tankrotationexample.Resources;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,12 +21,13 @@ public class StartMenuPanel extends JPanel {
         this.lf = lf;
         try {
 
-            menuBackground = ImageIO.read(this.getClass().getClassLoader().getResource("title.png"));
+            menuBackground = ImageIO.read(this.getClass().getClassLoader().getResource("menu/title.png"));
         } catch (IOException e) {
             System.out.println("Error cant read menu background");
             e.printStackTrace();
             System.exit(-3);
         }
+//        menuBackground = Resources.getSprites("menu");
         this.setBackground(Color.BLACK);
         this.setLayout(null);
 
