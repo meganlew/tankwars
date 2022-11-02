@@ -16,27 +16,26 @@ public class Resources {
     private static Map<String, Clip> sounds = new HashMap<>();
     private static Map<String, List<BufferedImage>> animations = new HashMap<>();
 
+    private static BufferedImage loadSprite(String path) throws IOException{
+        return ImageIO.read(Objects.
+                requireNonNull(GameWorld
+                .class
+                .getClassLoader()
+                .getResource(path)));
+    }
+
     private static void initSprites(){
         try {
-            Resources.sprites.put("tank1",
-                    ImageIO.read(
-                            Objects.requireNonNull(GameWorld .class.getClassLoader().getResource("tank/tank1.png"),
-                                    "Could not find tank1.png")));
-
-            Resources.sprites.put("tank2",
-                    ImageIO.read(
-                            Objects.requireNonNull(GameWorld .class.getClassLoader().getResource("tank/tank2.png"),
-                                    "Could not find tank2.png")));
-
-//            Resources.sprites.put("menu",
-//                    ImageIO.read(Resources.class.getClassLoader().getResource("menu/title.png")));
-
+            Resources.sprites.put("tank1", loadSprite("tank/tank1.png"));
+            Resources.sprites.put("tank2", loadSprite("tank/tank2.png"));
+//            Resources.sprites.put("menu", loadSprite("menu/title.png"));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.exit(-1);
         }
     }
 
-        private static void initSounds(){
+    private static void initSounds(){
 
     }
     private static void initAnimations(){
