@@ -28,6 +28,16 @@ public class Resources {
         try {
             Resources.sprites.put("tank1", loadSprite("tank/tank1.png"));
             Resources.sprites.put("tank2", loadSprite("tank/tank2.png"));
+            Resources.sprites.put("bullet", loadSprite("bullet/Bullet.png"));
+            Resources.sprites.put("rocket1", loadSprite("bullet/rocket1.png"));
+            Resources.sprites.put("rocket2", loadSprite("bullet/rocket2.png"));
+            Resources.sprites.put("floor", loadSprite("floor/bg.bmp"));
+            Resources.sprites.put("unbreak", loadSprite("walls/unbreak.png"));
+            Resources.sprites.put("break1", loadSprite("walls/break1.png"));
+            Resources.sprites.put("break2", loadSprite("walls/break2.png"));
+            Resources.sprites.put("speed", loadSprite("powerups/speed.png"));
+            Resources.sprites.put("health", loadSprite("powerups/health.png"));
+            Resources.sprites.put("shield", loadSprite("powerups/shield.png"));
 //            Resources.sprites.put("menu", loadSprite("menu/title.png"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
