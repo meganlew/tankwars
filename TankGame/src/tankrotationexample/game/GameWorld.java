@@ -15,7 +15,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -30,6 +34,7 @@ public class GameWorld extends JPanel implements Runnable {
     private Tank t2;
     private Launcher lf;
     private long tick = 0;
+    private List<Wall> walls = new ArrayList<>();
 
     /**
      * 
@@ -86,9 +91,47 @@ public class GameWorld extends JPanel implements Runnable {
      * initial state as well.
      */
     public void InitializeGame() {
-        this.world = new BufferedImage(GameConstants.GAME_SCREEN_WIDTH,
-                GameConstants.GAME_SCREEN_HEIGHT,
+        this.world = new BufferedImage(GameConstants.WORLD_WIDTH,
+                GameConstants.WORLD_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
+
+
+        try(BufferedReader mapReader = new BufferedReader(new InputStreamReader(GameWorld.class.getClassLoader().getResourceAsStream("maps/map1.csv")))){
+            for (int i = 0; mapReader.ready(); i++){
+                String[] gameObjects = mapReader.readLine().split(",");
+                for (int j = 0; j < gameObjects.length; j++){
+                    String objectType = gameObjects[i];
+                    switch (objectType){
+                        // continue if 0
+                        case "0" -> {
+
+                        }
+                        // breakable walls
+                        case "2" -> {
+                            walls.add(new Breakable(i*30,j*30, Resources.getSprites("break1")));
+                        }
+                        // unbreakable walls
+                        case "3", "9" -> {
+                            walls.add(new Wall(i*30,j*30, Resources.getSprites("unbreak")));
+                        }
+                        // health powerup
+                        case "4" -> {
+
+                        }
+                        // speed powerup
+                        case "5" -> {
+
+                        }
+                        // shield powerup
+                        case "6" -> {
+
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         // intialize tank with position
@@ -110,7 +153,8 @@ public class GameWorld extends JPanel implements Runnable {
         Graphics2D buffer = world.createGraphics();
         // set background color
         buffer.setColor(Color.black);
-        buffer.fillRect(0,0,GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
+        buffer.fillRect(0,0,GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
+        this.walls.forEach((wall -> wall.drawImage(buffer)));
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
         // draw walls

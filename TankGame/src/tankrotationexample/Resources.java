@@ -59,6 +59,10 @@ public class Resources {
     }
 
     public static BufferedImage getSprites(String key){
-        return Resources.sprites.get(key);
+        if(!Resources.sprites.containsKey(key)){
+            System.out.println(key + "resource not found");
+            System.exit(-2);
+        }
+           return Resources.sprites.get(key);
     }
 }
