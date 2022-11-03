@@ -100,7 +100,7 @@ public class GameWorld extends JPanel implements Runnable {
             for (int i = 0; mapReader.ready(); i++){
                 String[] gameObjects = mapReader.readLine().split(",");
                 for (int j = 0; j < gameObjects.length; j++){
-                    String objectType = gameObjects[i];
+                    String objectType = gameObjects[j];
                     switch (objectType){
                         // continue if 0
                         case "0" -> {
