@@ -108,11 +108,11 @@ public class GameWorld extends JPanel implements Runnable {
                         }
                         // breakable walls
                         case "2" -> {
-                            walls.add(new Breakable(i*30,j*30, Resources.getSprites("break1")));
+                            walls.add(new Breakable(j*30,i*30, Resources.getSprites("break1")));
                         }
                         // unbreakable walls
                         case "3", "9" -> {
-                            walls.add(new Wall(i*30,j*30, Resources.getSprites("unbreak")));
+                            walls.add(new Wall(j*30,i*30, Resources.getSprites("unbreak")));
                         }
                         // health powerup
                         case "4" -> {
