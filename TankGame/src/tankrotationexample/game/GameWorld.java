@@ -127,16 +127,32 @@ public class GameWorld extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         Graphics2D buffer = world.createGraphics();
-        // set background color
-        buffer.setColor(Color.black);
-        buffer.fillRect(0,0,GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
+        // set background color, draws black squares
+//        buffer.setColor(Color.black);
+//        buffer.fillRect(0,0,GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
         this.gameObjects.forEach((gObj -> gObj.drawImage(buffer)));
-
+        drawFloor(buffer);
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
         // draw walls
         // draw bullets
         g2.drawImage(world, 0, 0, null);
+    }
+
+    void drawFloor(Graphics2D buffer){
+        for(int i = 0; i < GameConstants.WORLD_WIDTH; i += 320){
+            for(int j = 0; j < GameConstants.WORLD_HEIGHT; j += 240){
+                buffer.drawImage(Resources.getSprites("floor"),i,j, null);
+            }
+        }
+    }
+
+    void drawMiniMap(Graphics2D g, BufferedImage world){
+
+    }
+
+    void drawSplitScreen(Graphics2D g, BufferedImage world){
+
     }
 
 }
