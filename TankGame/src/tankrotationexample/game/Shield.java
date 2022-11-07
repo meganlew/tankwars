@@ -4,12 +4,12 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class Wall extends GameObject {
+public class Shield extends GameObject {
 
     float x,y;
     BufferedImage img;
 
-    public Wall(float x, float y, BufferedImage img){
+    public Shield(float x, float y, BufferedImage img){
         this.x = x;
         this.y = y;
         this.img = img;

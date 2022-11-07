@@ -10,7 +10,6 @@ import tankrotationexample.GameConstants;
 import tankrotationexample.Launcher;
 import tankrotationexample.Resources;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -34,7 +33,7 @@ public class GameWorld extends JPanel implements Runnable {
     private Tank t2;
     private Launcher lf;
     private long tick = 0;
-    private List<Wall> walls = new ArrayList<>();
+    private List<GameObject> gameObjects = new ArrayList<>();
 
     /**
      * 
@@ -101,32 +100,9 @@ public class GameWorld extends JPanel implements Runnable {
                 String[] gameObjects = mapReader.readLine().split(",");
                 for (int j = 0; j < gameObjects.length; j++){
                     String objectType = gameObjects[j];
-                    switch (objectType){
-                        // continue if 0
-                        case "0" -> {
+                    if(Objects.equals("0", objectType)) continue;
+                    this.gameObjects.add(GameObject.gameObjectFactory(objectType, j*30, i*30));
 
-                        }
-                        // breakable walls
-                        case "2" -> {
-                            walls.add(new Breakable(j*30,i*30, Resources.getSprites("break1")));
-                        }
-                        // unbreakable walls
-                        case "3", "9" -> {
-                            walls.add(new Wall(j*30,i*30, Resources.getSprites("unbreak")));
-                        }
-                        // health powerup
-                        case "4" -> {
-
-                        }
-                        // speed powerup
-                        case "5" -> {
-
-                        }
-                        // shield powerup
-                        case "6" -> {
-
-                        }
-                    }
                 }
             }
         } catch (IOException e) {
@@ -154,7 +130,8 @@ public class GameWorld extends JPanel implements Runnable {
         // set background color
         buffer.setColor(Color.black);
         buffer.fillRect(0,0,GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
-        this.walls.forEach((wall -> wall.drawImage(buffer)));
+        this.gameObjects.forEach((gObj -> gObj.drawImage(buffer)));
+
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
         // draw walls
