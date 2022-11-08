@@ -138,6 +138,7 @@ public class GameWorld extends JPanel implements Runnable {
         // draw walls
         // draw bullets
         g2.drawImage(world, 0, 0, null);
+        drawSplitScreen(g2, world);
         drawMiniMap(g2, world);
     }
 
@@ -160,7 +161,10 @@ public class GameWorld extends JPanel implements Runnable {
     }
 
     void drawSplitScreen(Graphics2D g, BufferedImage world){
-
+        BufferedImage lh = world.getSubimage(t1.getscreenX(),t1.getscreenY(), GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+        BufferedImage rh = world.getSubimage(t2.getscreenX(),t2.getscreenY(), GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+        g.drawImage(lh,0,0,null);
+        g.drawImage(rh,GameConstants.GAME_SCREEN_WIDTH/2,0,null);
     }
 
 }
