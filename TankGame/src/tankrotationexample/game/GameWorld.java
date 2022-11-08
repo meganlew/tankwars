@@ -13,6 +13,7 @@ import tankrotationexample.Resources;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -127,16 +128,17 @@ public class GameWorld extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         Graphics2D buffer = world.createGraphics();
+        drawFloor(buffer);
         // set background color, draws black squares
 //        buffer.setColor(Color.black);
 //        buffer.fillRect(0,0,GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
         this.gameObjects.forEach((gObj -> gObj.drawImage(buffer)));
-        drawFloor(buffer);
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
         // draw walls
         // draw bullets
         g2.drawImage(world, 0, 0, null);
+        drawMiniMap(g2, world);
     }
 
     void drawFloor(Graphics2D buffer){
@@ -148,6 +150,12 @@ public class GameWorld extends JPanel implements Runnable {
     }
 
     void drawMiniMap(Graphics2D g, BufferedImage world){
+        BufferedImage mm = world.getSubimage(0,0, GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
+        AffineTransform at = new AffineTransform();
+        at.translate(GameConstants.GAME_SCREEN_WIDTH/2f - (GameConstants.WORLD_WIDTH*.2f)/2f,
+                GameConstants.GAME_SCREEN_HEIGHT - (GameConstants.WORLD_HEIGHT*.2f));
+        at.scale(.2,.2);
+        g.drawImage(mm,at, null);
 
     }
 
