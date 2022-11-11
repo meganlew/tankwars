@@ -1,9 +1,13 @@
 package tankrotationexample.game;
 
 import tankrotationexample.GameConstants;
+import tankrotationexample.Resources;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,6 +20,9 @@ public class Tank{
     private float vx;
     private float vy;
     private float angle;
+
+    private long coolDown = 2000;
+    private long timeLastShot = 0;
     // speed
     private float R = 5;
     // how fast the tank moves left/right
@@ -26,6 +33,10 @@ public class Tank{
     private boolean DownPressed;
     private boolean RightPressed;
     private boolean LeftPressed;
+    private boolean shootPressed;
+    List<Bullet> ammo = new ArrayList<>(500);
+
+
     // intialize the tank
     Tank(float x, float y, float vx, float vy, float angle, BufferedImage img) {
         this.x = x;
@@ -56,6 +67,10 @@ public class Tank{
         this.LeftPressed = true;
     }
 
+    public void toggleShootPressed() {
+        this.shootPressed = true;
+    }
+
     void unToggleUpPressed() {
         this.UpPressed = false;
     }
@@ -70,6 +85,10 @@ public class Tank{
 
     void unToggleLeftPressed() {
         this.LeftPressed = false;
+    }
+
+    public void unToggleShootPressed() {
+        this.shootPressed = false;
     }
 
     void update() {
@@ -89,7 +108,13 @@ public class Tank{
             this.rotateRight();
         }
 
-
+        if (this.shootPressed && (this.timeLastShot + coolDown) < System.currentTimeMillis()){
+            this.timeLastShot = System.currentTimeMillis();
+            System.out.println("Tank shoot a bullet");
+            Bullet b = new Bullet(setBulletStartX(),setBulletStartY(),angle, Resources.getSprites("rocket2"));
+            this.ammo.add(b);
+        }
+        this.ammo.forEach(bullet -> bullet.update());
     }
 
     private int setBulletStartX(){
@@ -176,15 +201,15 @@ public class Tank{
         g2d.setColor(Color.RED);
         //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
         g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
-
+        this.ammo.forEach(bullet -> bullet.drawImage(g));
     }
 
-    public float getX() {
-        return this.x;
-    }
-    public float getY(){
-        return this.y;
-    }
+//    public float getX() {
+//        return this.x;
+//    }
+//    public float getY(){
+//        return this.y;
+//    }
 
     public int getscreenX(){
         return (int)screenX;
