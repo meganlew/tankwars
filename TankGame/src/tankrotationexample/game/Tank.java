@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author anthony-pc
  */
-public class Tank{
+public class Tank extends GameObject{
 
     private float x, screenX;
     private float y, screenY;
@@ -45,7 +45,9 @@ public class Tank{
         this.vy = vy;
         this.img = img;
         this.angle = angle;
+        this.hitbox = new Rectangle((int)x,(int)y, this.img.getWidth(), this.img.getHeight());
     }
+
 
     void setX(float x){ this.x = x; }
 
@@ -115,6 +117,14 @@ public class Tank{
             this.ammo.add(b);
         }
         this.ammo.forEach(bullet -> bullet.update());
+//        this.ammo.removeIf(bullet -> true);
+    }
+
+    public void setCoolDown(long newCoolDown){
+        this.coolDown = newCoolDown;
+        if(this.coolDown < 500){
+            this.coolDown = 500;
+        }
     }
 
     private int setBulletStartX(){
@@ -142,6 +152,7 @@ public class Tank{
         y -= vy;
        checkBorder();
        centerScreen();
+       this.hitbox.setLocation((int)x,(int)y);
     }
 
     private void moveForwards() {
@@ -152,6 +163,7 @@ public class Tank{
         // tank stays on the screen
         checkBorder();
         centerScreen();
+        this.hitbox.setLocation((int)x,(int)y);
     }
 
 
@@ -192,7 +204,7 @@ public class Tank{
     }
 
     // use this for the bullet
-    void drawImage(Graphics g) {
+    public void drawImage(Graphics g) {
         AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         //rotation.scale(1.9, 1,9);

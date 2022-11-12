@@ -7,6 +7,11 @@ import java.util.List;
 
 public abstract class GameObject {
 
+    protected Rectangle hitbox;
+
+    public Rectangle getHitBox(){
+        return this.hitbox.getBounds();
+    }
     public static GameObject gameObjectFactory(String type, float x, float y) {
         return switch (type) {
             case "2" -> new Breakable(x, y, Resources.getSprites("break1"));

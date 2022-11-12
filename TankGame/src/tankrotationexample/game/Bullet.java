@@ -1,5 +1,7 @@
 package tankrotationexample.game;
 
+import tankrotationexample.GameConstants;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -22,6 +24,7 @@ public class Bullet {
     void update(){
         x += Math.round(R * Math.cos(Math.toRadians(angle)));
         y += Math.round(R * Math.sin(Math.toRadians(angle)));
+        checkBorder();
     }
 
     void drawImage(Graphics g) {
@@ -35,5 +38,23 @@ public class Bullet {
         // change size of bullet
         g2d.drawRect((int)x,(int)y,this.img.getWidth()*5, this.img.getHeight()*5);
 
+    }
+    // check border remove bullets from the screen
+    private void checkBorder() {
+        // instead of setting these values return true or false
+        // false haven't hit a wall
+        // true hit a wall
+        if (x < 30) {
+            x = 30;
+        }
+        if (x >= GameConstants.WORLD_WIDTH - 88) {
+            x = GameConstants.WORLD_WIDTH - 88;
+        }
+        if (y < 40) {
+            y = 40;
+        }
+        if (y >= GameConstants.WORLD_HEIGHT - 80) {
+            y = GameConstants.WORLD_HEIGHT - 80;
+        }
     }
 }
