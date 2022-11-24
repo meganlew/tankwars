@@ -1,8 +1,9 @@
 package tankrotationexample;
 import tankrotationexample.game.GameWorld;
+import tankrotationexample.game.Sound;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.Objects;
 public class Resources {
 
     private static Map<String, BufferedImage> sprites = new HashMap<>();
-    private static Map<String, Clip> sounds = new HashMap<>();
+    private static Map<String, Sound> sounds = new HashMap<>();
     private static Map<String, List<BufferedImage>> animations = new HashMap<>();
 
     private static BufferedImage loadSprite(String path) throws IOException{
@@ -46,7 +47,51 @@ public class Resources {
     }
 
     private static void initSounds(){
+        AudioInputStream audioStream;
+        Clip c;
+        Sound s;
 
+        try {
+            audioStream = AudioSystem.getAudioInputStream(
+                    Resources.class.getClassLoader().getResource("sounds/Music.mid")
+            );
+            c = AudioSystem.getClip();
+            c.open((audioStream));
+            s = new Sound(c);
+            Resources.sounds.put("bg", s);
+
+            audioStream = AudioSystem.getAudioInputStream(
+                    Resources.class.getClassLoader().getResource("sounds/pickup.wav")
+            );
+            c = AudioSystem.getClip();
+            c.open((audioStream));
+            s = new Sound(c);
+            Resources.sounds.put("powerup", s);
+
+            audioStream = AudioSystem.getAudioInputStream(
+                    Resources.class.getClassLoader().getResource("sounds/bullet.wav")
+            );
+            c = AudioSystem.getClip();
+            c.open((audioStream));
+            s = new Sound(c);
+            Resources.sounds.put("shoot", s);
+
+            audioStream = AudioSystem.getAudioInputStream(
+                    Resources.class.getClassLoader().getResource("sounds/Explosion_small.wav")
+            );
+            c = AudioSystem.getClip();
+            c.open((audioStream));
+            s = new Sound(c);
+            Resources.sounds.put("bullethit", s);
+
+
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
     private static void initAnimations(){
 
@@ -64,5 +109,13 @@ public class Resources {
             System.exit(-2);
         }
            return Resources.sprites.get(key);
+    }
+
+    public static Sound getSound(String key){
+        if(!Resources.sounds.containsKey(key)){
+            System.out.println(key + "sound not found");
+            System.exit(-2);
+        }
+        return Resources.sounds.get(key);
     }
 }

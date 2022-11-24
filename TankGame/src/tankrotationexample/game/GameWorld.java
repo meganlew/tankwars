@@ -29,7 +29,7 @@ import java.util.Objects;
 public class GameWorld extends JPanel implements Runnable {
 
     private BufferedImage world;
-
+    private Sound bgMusic;
     private Tank t1;
     private Tank t2;
     private Launcher lf;
@@ -47,7 +47,11 @@ public class GameWorld extends JPanel implements Runnable {
     @Override
     public void run() {
         try {
-            //this.resetGame();
+            this.resetGame();
+            bgMusic = Resources.getSound("bg");
+            bgMusic.setVolume(0.5f);
+            bgMusic.setLooping();
+            bgMusic.playSound();
             while (true) {
                 this.tick++;
                 this.t1.update(); // update tank
