@@ -93,7 +93,7 @@ public class Tank extends GameObject{
         this.shootPressed = false;
     }
 
-    void update() {
+    void update(GameWorld gw) {
         if (this.UpPressed) {
             this.moveForwards();
         }
@@ -115,6 +115,7 @@ public class Tank extends GameObject{
             System.out.println("Tank shoot a bullet");
             Bullet b = new Bullet(setBulletStartX(),setBulletStartY(),angle, Resources.getSprites("rocket2"));
             this.ammo.add(b);
+            Resources.getSound("shoot").playSound();
         }
         this.ammo.forEach(bullet -> bullet.update());
 //        this.ammo.removeIf(bullet -> true);

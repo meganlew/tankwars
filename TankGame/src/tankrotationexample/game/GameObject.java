@@ -12,6 +12,7 @@ public abstract class GameObject {
     public Rectangle getHitBox(){
         return this.hitbox.getBounds();
     }
+    protected boolean hasCollided = false;
     public static GameObject gameObjectFactory(String type, float x, float y) {
         return switch (type) {
             case "2" -> new Breakable(x, y, Resources.getSprites("break1"));

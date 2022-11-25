@@ -54,24 +54,10 @@ public class GameWorld extends JPanel implements Runnable {
             bgMusic.playSound();
             while (true) {
                 this.tick++;
-                this.t1.update(); // update tank
-                this.t2.update();
-                // tank collision
-                if(t1.getHitBox().intersects(this.t2.getHitBox())){
-                    this.t1.setX(50);
-                    this.t1.setY(50);
-                }
-                for(int i =0; i < this.gameObjects.size(); i++){
-                    GameObject ob1 = this.gameObjects.get(i);
-                    for(int j =0; j < this.gameObjects.size(); j++){
-                        if(i == j) continue;
-                        GameObject ob2 = this.gameObjects.get(j);
-                        if(ob1.getHitBox().intersects(ob2.getHitBox())){
-                            System.out.println(ob1 + "--->" + ob2);
-                        }
-                    }
-                }
-                // check for collisions
+                this.t1.update(this); // update tank
+                this.t2.update(this);
+                this.checkCollisions(); // check for collisions
+                this.gameObjects.removeIf(g -> g.hasCollided);
                 this.repaint();   // redraw game
                 
                 /*
@@ -105,6 +91,26 @@ public class GameWorld extends JPanel implements Runnable {
         this.t1.setY(300);
     }
 
+    private void checkCollisions(){
+        for(int i =0; i < this.gameObjects.size(); i++) {
+            GameObject ob1 = this.gameObjects.get(i);
+//            if(ob1 instanceof Wall) continue;
+            if(ob1 instanceof Wall || ob1 instanceof PowerUp) continue;
+            for (int j = 0; j < this.gameObjects.size(); j++) {
+                if (i == j) continue;
+                GameObject ob2 = this.gameObjects.get(j);
+                if (ob1.getHitBox().intersects(ob2.getHitBox())) {
+                    System.out.println(ob1 + "--->" + ob2);
+                    if(ob2 instanceof PowerUp && ob2.hasCollided){
+                        System.out.println("hit a powerup");
+                        Resources.getSound("powerup").playSound();
+                        ob2.hasCollided = true;
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Load all resources for Tank Wars Game. Set all Game Objects to their
      * initial state as well.
@@ -130,7 +136,7 @@ public class GameWorld extends JPanel implements Runnable {
         }
 
 
-        // intialize tank with position
+        // initialize tank with position
         t1 = new Tank(300, 300, 0, 0, (short) 0, Resources.getSprites("tank1"));
         // creating control object of tank
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SPACE);
@@ -187,5 +193,8 @@ public class GameWorld extends JPanel implements Runnable {
         g.drawImage(lh,0,0,null);
         g.drawImage(rh,GameConstants.GAME_SCREEN_WIDTH/2,0,null);
     }
+
+   // 28:17
+//    public void addGameObject(Bullet b) {this.gameObjects.add(b); }
 
 }
