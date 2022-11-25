@@ -25,6 +25,28 @@ public class Resources {
                 .getResource(path)));
     }
 
+    private static Sound loadSound(String path) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        AudioInputStream as = AudioSystem.getAudioInputStream(
+                Objects.requireNonNull(Resources.class.getClassLoader().getResource(path)));
+        Clip clip = null;
+        clip = AudioSystem.getClip();
+        clip.open(as);
+        Sound s = new Sound(clip);
+        s.setVolume(2f);
+        return s;
+    }
+
+    private static void initSounds(){
+        try {
+            Resources.sounds.put("bg", loadSound("sounds/Music.mid"));
+            Resources.sounds.put("powerup", loadSound("sounds/pickup.wav"));
+            Resources.sounds.put("shoot", loadSound("sounds/bullet.wav"));
+        } catch (UnsupportedAudioFileException | IOException |LineUnavailableException e){
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
     private static void initSprites(){
         try {
             Resources.sprites.put("tank1", loadSprite("tank/tank1.png"));
@@ -46,53 +68,7 @@ public class Resources {
         }
     }
 
-    private static void initSounds(){
-        AudioInputStream audioStream;
-        Clip c;
-        Sound s;
 
-        try {
-            audioStream = AudioSystem.getAudioInputStream(
-                    Resources.class.getClassLoader().getResource("sounds/Music.mid")
-            );
-            c = AudioSystem.getClip();
-            c.open((audioStream));
-            s = new Sound(c);
-            Resources.sounds.put("bg", s);
-
-            audioStream = AudioSystem.getAudioInputStream(
-                    Resources.class.getClassLoader().getResource("sounds/pickup.wav")
-            );
-            c = AudioSystem.getClip();
-            c.open((audioStream));
-            s = new Sound(c);
-            Resources.sounds.put("powerup", s);
-
-            audioStream = AudioSystem.getAudioInputStream(
-                    Resources.class.getClassLoader().getResource("sounds/bullet.wav")
-            );
-            c = AudioSystem.getClip();
-            c.open((audioStream));
-            s = new Sound(c);
-            Resources.sounds.put("shoot", s);
-
-            audioStream = AudioSystem.getAudioInputStream(
-                    Resources.class.getClassLoader().getResource("sounds/Explosion_small.wav")
-            );
-            c = AudioSystem.getClip();
-            c.open((audioStream));
-            s = new Sound(c);
-            Resources.sounds.put("bullethit", s);
-
-
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        }
-    }
     private static void initAnimations(){
 
     }
