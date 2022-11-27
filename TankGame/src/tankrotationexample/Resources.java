@@ -6,10 +6,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Resources {
 
@@ -70,7 +67,26 @@ public class Resources {
 
 
     private static void initAnimations(){
-
+        try{
+            String base = "animations/bullet/shell-explosion-%04d.png";
+            List<BufferedImage> temp = new ArrayList<>();
+            for (int i = 0; i < 5; i++){
+                String fName = String.format(base,i);
+                temp.add(loadSprite(fName));
+            }
+            Resources.animations.put("shoot", temp);
+            base = "animations/explosion/explosion-%04d.png";
+            temp = new ArrayList<>();
+            for (int i = 0; i < 5; i++){
+                String fName = String.format(base,i);
+                temp.add(loadSprite(fName));
+            }
+            Resources.animations.put("collide", temp);
+        }catch(IOException e){
+            e.printStackTrace();
+            System.out.println(e);
+            System.exit(-3);
+        }
     }
 
     public static void loadResources(){
@@ -93,5 +109,14 @@ public class Resources {
             System.exit(-2);
         }
         return Resources.sounds.get(key);
+    }
+
+
+    public static List<BufferedImage> getAnimation(String key) {
+        if(!Resources.animations.containsKey(key)){
+            System.out.println(key + "sound not found");
+            System.exit(-2);
+        }
+        return Resources.animations.get(key);
     }
 }

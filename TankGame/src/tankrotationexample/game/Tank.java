@@ -114,6 +114,8 @@ public class Tank extends GameObject{
             this.timeLastShot = System.currentTimeMillis();
             System.out.println("Tank shoot a bullet");
             Bullet b = new Bullet(setBulletStartX(),setBulletStartY(),angle, Resources.getSprites("rocket2"));
+//            gw.addGameObject(b);
+            gw.addAnimation(new Animation(b.x, b.y, Resources.getAnimation("shoot")));
             this.ammo.add(b);
             Resources.getSound("shoot").playSound();
         }

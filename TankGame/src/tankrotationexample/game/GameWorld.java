@@ -35,6 +35,7 @@ public class GameWorld extends JPanel implements Runnable {
     private Launcher lf;
     private long tick = 0;
     private List<GameObject> gameObjects = new ArrayList<>();
+    private List<Animation> anims = new ArrayList<>(20);
 
     /**
      * 
@@ -57,7 +58,9 @@ public class GameWorld extends JPanel implements Runnable {
                 this.t1.update(this); // update tank
                 this.t2.update(this);
                 this.checkCollisions(); // check for collisions
+                this.anims.forEach(a -> a.update());
                 this.gameObjects.removeIf(g -> g.hasCollided);
+                this.anims.removeIf(a -> !a.isRunning);
                 this.repaint();   // redraw game
                 
                 /*
@@ -94,7 +97,6 @@ public class GameWorld extends JPanel implements Runnable {
     private void checkCollisions(){
         for(int i =0; i < this.gameObjects.size(); i++) {
             GameObject ob1 = this.gameObjects.get(i);
-//            if(ob1 instanceof Wall) continue;
             if(ob1 instanceof Wall || ob1 instanceof PowerUp) continue;
             for (int j = 0; j < this.gameObjects.size(); j++) {
                 if (i == j) continue;
@@ -111,6 +113,40 @@ public class GameWorld extends JPanel implements Runnable {
         }
     }
 
+//    private void checkCollisions(){
+//        for(int i =0; i < this.gameObjects.size(); i++) {
+//            GameObject ob1 = this.gameObjects.get(i);
+//            if(ob1 instanceof Wall || ob1 instanceof PowerUp) continue;
+//            for (int j = 0; j < this.gameObjects.size(); j++) {
+//                if (i == j) continue;
+//                GameObject ob2 = this.gameObjects.get(j);
+//                if (ob1.getHitBox().intersects(ob2.getHitBox())) {
+//                    System.out.println(ob1 + "--->" + ob2);
+//                    if(ob2 instanceof PowerUp && !(ob1 instanceof Bullet)){
+//                        ob2.hasCollided = true;
+//                        Resources.getSound("powerup").playSound();
+//                    }else if(ob2 instanceof Bullet){
+//                        if(ob1 instanceof Tank){
+//                            if(((Tank)ob1).getId() == ((Bullet)ob2).getTankId()){
+//                                continue;
+//                            }
+//                        }
+//                        ob2.hasCollided = true;
+//                        Bullet b = (Bullet)ob2;
+//                        this.anims.add(new Animation(b.x,b.y, Resources.getAnimation("shoot")));
+//                        Resources.getSound("shoot").playSound();
+//                    }else if(ob2 instanceof Wall && !(ob1 instanceof Tank)){
+//                        if(ob1 instanceof Bullet){
+//                            ob1.hasCollided = true;
+//                            Bullet b = (Bullet)ob1;
+//                            this.anims.add(new Animation(b.x,b.y, Resources.getAnimation("shoot")));
+//                        }
+//                        Resources.getSound("shoot").playSound();
+//                    }
+//                }
+//            }
+//        }
+//    }
     /**
      * Load all resources for Tank Wars Game. Set all Game Objects to their
      * initial state as well.
@@ -162,6 +198,7 @@ public class GameWorld extends JPanel implements Runnable {
         this.gameObjects.forEach((gObj -> gObj.drawImage(buffer)));
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
+        this.anims.forEach(a -> a.drawImage(buffer));
         // draw walls
         // draw bullets
         g2.drawImage(world, 0, 0, null);
@@ -194,7 +231,12 @@ public class GameWorld extends JPanel implements Runnable {
         g.drawImage(rh,GameConstants.GAME_SCREEN_WIDTH/2,0,null);
     }
 
-   // 28:17
+    public void addAnimation(Animation anim) {
+        this.anims.add(anim);
+    }
+
+
+    // 28:17
 //    public void addGameObject(Bullet b) {this.gameObjects.add(b); }
 
 }
