@@ -222,7 +222,13 @@ public class Tank extends GameObject{
         //draw health bar
         g2d.setColor(Color.GREEN);
         g2d.drawRect((int)x,(int)y-20,100,15);
+        if(this.health < 50){
+            g2d.setColor(Color.red);
+        }
         g2d.fillRect((int)x, (int)y-20, this.health,15);
+        //draw lives
+        g2d.drawOval((int)x, (int)y+65, 10, 10);
+        g2d.fillOval((int)x, (int)y+65, 10, 10);
     }
 
 //    public float getX() {
