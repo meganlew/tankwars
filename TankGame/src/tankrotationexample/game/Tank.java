@@ -23,6 +23,8 @@ public class Tank extends GameObject{
 
     private long coolDown = 2000;
     private long timeLastShot = 0;
+    private int lives = 3;
+    private int health = 100;
     // speed
     private float R = 5;
     // how fast the tank moves left/right
@@ -217,6 +219,10 @@ public class Tank extends GameObject{
         //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
         g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
         this.ammo.forEach(bullet -> bullet.drawImage(g));
+        //draw health bar
+        g2d.setColor(Color.GREEN);
+        g2d.drawRect((int)x,(int)y-20,100,15);
+        g2d.fillRect((int)x, (int)y-20, this.health,15);
     }
 
 //    public float getX() {

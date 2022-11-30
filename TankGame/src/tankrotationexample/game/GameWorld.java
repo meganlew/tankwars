@@ -55,6 +55,14 @@ public class GameWorld extends JPanel implements Runnable {
             bgMusic.playSound();
             while (true) {
                 this.tick++;
+//                for(int i = this.gameObjects.size()-1; i>0; i--){
+//                    GameObject gobj = this.gameObjects.get(i);
+//                    if(gobj instanceof Tank){
+//                        ((Tank)gobj).update(this);
+//                    }else if(gobj instanceof Bullet){
+//                        ((Bullet)gobj).update(this);
+//                    }
+//                }
                 this.t1.update(this); // update tank
                 this.t2.update(this);
                 this.checkCollisions(); // check for collisions
