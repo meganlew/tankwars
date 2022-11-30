@@ -112,7 +112,7 @@ public class Tank extends GameObject{
 
         if (this.shootPressed && (this.timeLastShot + coolDown) < System.currentTimeMillis()){
             this.timeLastShot = System.currentTimeMillis();
-            System.out.println("Tank shoot a bullet");
+//            System.out.println("Tank shoot a bullet");
             Bullet b = new Bullet(setBulletStartX(),setBulletStartY(),angle, Resources.getSprites("rocket2"));
 //            gw.addGameObject(b);
             gw.addAnimation(new Animation(b.x, b.y, Resources.getAnimation("shoot")));
