@@ -14,7 +14,7 @@ import java.util.List;
  * @author anthony-pc
  */
 public class Tank extends GameObject{
-
+    private int id;
     private float x, screenX;
     private float y, screenY;
     private float vx;
@@ -30,7 +30,6 @@ public class Tank extends GameObject{
     // how fast the tank moves left/right
     private float ROTATIONSPEED = 3.0f;
 
-    private BufferedImage img;
     private boolean UpPressed;
     private boolean DownPressed;
     private boolean RightPressed;
@@ -41,16 +40,14 @@ public class Tank extends GameObject{
 
     // intialize the tank
     Tank(float x, float y, float vx, float vy, float angle, BufferedImage img) {
-        this.x = x;
-        this.y = y;
-        this.vx = vx;
-        this.vy = vy;
-        this.img = img;
+        super(x,y, img);
+        this.id = id;
         this.angle = angle;
-        this.hitbox = new Rectangle((int)x,(int)y, this.img.getWidth(), this.img.getHeight());
     }
 
-
+    public int getID(){
+        return id;
+    }
     void setX(float x){ this.x = x; }
 
     void setY(float y) { this. y = y;}
@@ -217,18 +214,18 @@ public class Tank extends GameObject{
         g2d.drawImage(this.img, rotation, null);
         g2d.setColor(Color.RED);
         //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
-        g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
+        g2d.drawRect((int) x, (int) y, this.img.getWidth(), this.img.getHeight());
         this.ammo.forEach(bullet -> bullet.drawImage(g));
         //draw health bar
         g2d.setColor(Color.GREEN);
-        g2d.drawRect((int)x,(int)y-20,100,15);
-        if(this.health < 50){
+        g2d.drawRect((int) x, (int) y - 20, 100, 15);
+        if (this.health < 50) {
             g2d.setColor(Color.red);
         }
-        g2d.fillRect((int)x, (int)y-20, this.health,15);
+        g2d.fillRect((int) x, (int) y - 20, this.health, 15);
         //draw lives
-        g2d.drawOval((int)x, (int)y+65, 10, 10);
-        g2d.fillOval((int)x, (int)y+65, 10, 10);
+        g2d.drawOval((int) x, (int) y + 65, 10, 10);
+        g2d.fillOval((int) x, (int) y + 65, 10, 10);
     }
 
 //    public float getX() {

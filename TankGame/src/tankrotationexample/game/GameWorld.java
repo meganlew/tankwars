@@ -102,6 +102,7 @@ public class GameWorld extends JPanel implements Runnable {
         this.t1.setY(300);
     }
 
+
     private void checkCollisions(){
         for(int i =0; i < this.gameObjects.size(); i++) {
             GameObject ob1 = this.gameObjects.get(i);

@@ -6,19 +6,19 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class Bullet {
+public class Bullet extends GameObject{
+//    private int tankId;
     float R = 6;
-    float x,y;
     float angle = 0;
     float vx=0;
     float vy=0;
-    BufferedImage img;
+
 
     public Bullet(float x, float y, float angle, BufferedImage img){
-        this.x = x;
-        this.y = y;
+        super(x,y,img);
+//        this.tankId = tankID;
         this.angle = angle;
-        this.img = img;
+
     }
 
     void update(){
@@ -27,7 +27,7 @@ public class Bullet {
         checkBorder();
     }
 
-    void drawImage(Graphics g) {
+    public void drawImage(Graphics g) {
         AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         rotation.scale(5, 5);
