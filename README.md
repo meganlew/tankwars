@@ -46,8 +46,8 @@ will generate a run configuration.
 
 |               | Player 1  | Player 2       |
 |---------------|-----------|----------------|
-|  Forward      | S         | up             |
-|  Backward     | W         | down           |
+|  Forward      | W         | up             |
+|  Backward     | S         | down           |
 |  Rotate left  | A         | left           |
 |  Rotate Right | D         | right          |
 |  Shoot        | space bar | return / enter |
