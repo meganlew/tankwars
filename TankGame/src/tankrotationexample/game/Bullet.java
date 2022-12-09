@@ -7,7 +7,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Bullet extends GameObject{
-//    private int tankId;
+    private int tankId;
     float R = 6;
     float angle = 0;
     float vx=0;
@@ -56,5 +56,9 @@ public class Bullet extends GameObject{
         if (y >= GameConstants.WORLD_HEIGHT - 80) {
             y = GameConstants.WORLD_HEIGHT - 80;
         }
+    }
+
+    public int getTankId() {
+        return tankId;
     }
 }

@@ -45,9 +45,6 @@ public class Tank extends GameObject{
         this.angle = angle;
     }
 
-    public int getID(){
-        return id;
-    }
     void setX(float x){ this.x = x; }
 
     void setY(float y) { this. y = y;}
@@ -240,5 +237,9 @@ public class Tank extends GameObject{
     }
     public int getscreenY(){
         return (int)screenY;
+    }
+
+    public int getId() {
+        return id;
     }
 }

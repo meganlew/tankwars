@@ -114,7 +114,7 @@ public class Resources {
 
     public static List<BufferedImage> getAnimation(String key) {
         if(!Resources.animations.containsKey(key)){
-            System.out.println(key + "sound not found");
+            System.out.println(key + "animation not found");
             System.exit(-2);
         }
         return Resources.animations.get(key);
