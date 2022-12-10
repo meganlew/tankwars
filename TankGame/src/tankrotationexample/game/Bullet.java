@@ -39,22 +39,27 @@ public class Bullet extends GameObject{
         g2d.drawRect((int)x,(int)y,this.img.getWidth()*5, this.img.getHeight()*5);
 
     }
-    // check border remove bullets from the screen
+
     private void checkBorder() {
+        // check border remove bullets from the screen,  when set to this.hasCollided = false;
         // instead of setting these values return true or false
         // false haven't hit a wall
         // true hit a wall
         if (x < 30) {
-            x = 30;
+//            x = 30;
+            this.hasCollided = false;
         }
         if (x >= GameConstants.WORLD_WIDTH - 88) {
-            x = GameConstants.WORLD_WIDTH - 88;
+//            x = GameConstants.WORLD_WIDTH - 88;
+            this.hasCollided = false;
         }
         if (y < 40) {
-            y = 40;
+//            y = 40;
+            this.hasCollided = false;
         }
         if (y >= GameConstants.WORLD_HEIGHT - 80) {
-            y = GameConstants.WORLD_HEIGHT - 80;
+//            y = GameConstants.WORLD_HEIGHT - 80;
+            this.hasCollided = false;
         }
     }
 
