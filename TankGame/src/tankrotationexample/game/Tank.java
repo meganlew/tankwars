@@ -90,6 +90,10 @@ public class Tank extends GameObject{
     }
 
     void update(GameWorld gw) {
+        // decrease health
+//        if(gw.tick %15 == 0){
+//            this.health--;
+//        }
         if (this.UpPressed) {
             this.moveForwards();
         }
@@ -216,13 +220,16 @@ public class Tank extends GameObject{
         //draw health bar
         g2d.setColor(Color.GREEN);
         g2d.drawRect((int) x, (int) y - 20, 100, 15);
+        g2d.fillRect((int)x, (int) y-20, this.health,15);
         if (this.health < 50) {
             g2d.setColor(Color.red);
         }
         g2d.fillRect((int) x, (int) y - 20, this.health, 15);
         //draw lives
-        g2d.drawOval((int) x, (int) y + 65, 10, 10);
-        g2d.fillOval((int) x, (int) y + 65, 10, 10);
+        for(int i=0; i<lives; i++) {
+            g2d.drawOval((int) x + 15 + i*15, (int) y + 65, 10, 10);
+            g2d.fillOval((int) x + 15 + i*15, (int) y + 65, 10, 10);
+        }
     }
 
 //    public float getX() {

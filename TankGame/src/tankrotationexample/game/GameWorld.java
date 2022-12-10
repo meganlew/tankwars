@@ -33,7 +33,7 @@ public class GameWorld extends JPanel implements Runnable {
     private Tank t1;
     private Tank t2;
     private Launcher lf;
-    private long tick = 0;
+    public long tick = 1;
     private List<GameObject> gameObjects = new ArrayList<>();
     private List<Animation> anims = new ArrayList<>(20);
 
